@@ -1,0 +1,26 @@
+{
+  "name": "poll",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/poll/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "poll:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "poll:build:development"
+        },
+        "production": {
+          "buildTarget": "poll:build:production"
+        }
+      }
+    }
+  }
+}
