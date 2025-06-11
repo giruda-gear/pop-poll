@@ -1,7 +1,6 @@
 import { defineConfig } from '@mikro-orm/postgresql';
-// import { ReflectMetadataProvider } from '@mikro-orm/core';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
-// import { User } from '../entities/user.entity';
+import { Migrator } from '@mikro-orm/migrations';
 
 export default defineConfig({
   host: process.env.DB_HOST || 'localhost',
@@ -9,8 +8,6 @@ export default defineConfig({
   user: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'mypass',
   dbName: process.env.DB_NAME || 'pop_poll',
-  // entities: [User],
-  // entitiesTs: [User],
   entities: ['dist/libs/database/src/entities/**/*.entity.js'],
   entitiesTs: ['libs/database/src/entities/**/*.entity.ts'], 
   debug: true,
@@ -19,4 +16,5 @@ export default defineConfig({
     pathTs: 'libs/database/src/migrations',
   },
   metadataProvider: TsMorphMetadataProvider,
+  extensions: [Migrator]
 });
