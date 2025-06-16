@@ -16,5 +16,6 @@ export default defineConfig({
     pathTs: 'libs/database/src/migrations',
   },
   metadataProvider: TsMorphMetadataProvider,
+  // preferTs: true,
   extensions: [Migrator]
 });

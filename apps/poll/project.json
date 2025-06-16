@@ -34,10 +34,15 @@
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": ["build"],
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "database"
+        }
+      ],
       "options": {
         "buildTarget": "poll:build",
-        "runBuildTargetDependencies": false
+        "watch": true
       },
       "configurations": {
         "development": {

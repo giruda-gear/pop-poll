@@ -5,6 +5,6 @@
     "rootDir": "src",
     "composite": true,
   },
-  "include": ["src/**/*", "mikro-orm.config.ts"],
+  "include": ["src/**/*", "src/mikro-orm.config.ts"],
   "exclude": ["node_modules", "dist"]
 }
