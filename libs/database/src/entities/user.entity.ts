@@ -1,6 +1,6 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
-
-@Entity()
+console.log('ㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂ');
+@Entity({ tableName: "users"})
 export class User {
   @PrimaryKey()
   id!: number;
@@ -8,15 +8,15 @@ export class User {
   @Property({ unique: true })
   email!: string;
 
-  @Property<User>()
+  @Property({ unique: true })
   username!: string;
 
-  @Property<User>()
+  @Property()
   password!: string;
 
-  @Property<User>()
-  createdAt = new Date();
+  @Property({ onCreate: () => new Date() })
+  createdAt?: Date;
 
-  @Property<User>({ onUpdate: () => new Date() })
-  updatedAt = new Date();
+  @Property({ onCreate: () => new Date(), onUpdate: () => new Date() })
+  updatedAt?: Date;
 }

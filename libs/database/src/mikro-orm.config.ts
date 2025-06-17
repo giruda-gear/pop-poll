@@ -9,13 +9,12 @@ export default defineConfig({
   password: process.env.DB_PASSWORD || 'mypass',
   dbName: process.env.DB_NAME || 'pop_poll',
   entities: ['dist/libs/database/src/entities/**/*.entity.js'],
-  entitiesTs: ['libs/database/src/entities/**/*.entity.ts'], 
-  debug: true,
+  entitiesTs: ['libs/database/src/entities/**/*.entity.ts'],
+  debug: process.env.NODE_ENV === 'development',
   migrations: {
     path: 'libs/database/src/migrations',
     pathTs: 'libs/database/src/migrations',
   },
   metadataProvider: TsMorphMetadataProvider,
-  // preferTs: true,
-  extensions: [Migrator]
+  extensions: [Migrator],
 });
