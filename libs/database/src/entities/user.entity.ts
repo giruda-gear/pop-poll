@@ -1,5 +1,5 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
-console.log('ㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂ');
+
 @Entity({ tableName: "users"})
 export class User {
   @PrimaryKey()

@@ -21,7 +21,6 @@
     "@nx/nest": "21.2.0",
     "@nx/node": "21.2.0",
     "@nx/web": "21.2.0",
-    "@nx/webpack": "21.2.0",
     "@types/jest": "^29.5.12",
     "@types/node": "~18.16.9",
     "eslint": "^9.8.0",
@@ -31,6 +30,8 @@
     "nx": "21.2.0",
     "prettier": "^2.6.2",
     "ts-jest": "^29.1.0",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "tslib": "^2.3.0",
     "typescript": "5.8.3",
     "typescript-eslint": "^8.0.0"

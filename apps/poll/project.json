@@ -3,54 +3,21 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/poll/src",
   "projectType": "application",
-  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+      "executor": "@nx/js:tsc",
+      "outputs": ["dist/apps/poll"],
       "options": {
-        "target": "node",
-        "compiler": "tsc",
         "outputPath": "dist/apps/poll",
         "main": "apps/poll/src/main.ts",
         "tsConfig": "apps/poll/tsconfig.app.json",
-        "assets": ["apps/poll/src/assets"],
-        "webpackConfig": "apps/poll/webpack.config.js"
-      },
-      "configurations": {
-        "development": {
-          "optimization": false,
-          "extractLicenses": false,
-          "sourceMap": true
-        },
-        "production": {
-          "optimization": true,
-          "extractLicenses": true,
-          "sourceMap": false
-        }
+        "assets": ["apps/poll/src/assets"]
       }
     },
     "serve": {
-      "executor": "@nx/js:node",
-      "defaultConfiguration": "development",
-      "dependsOn": [
-        {
-          "target": "build",
-          "projects": "database"
-        }
-      ],
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "poll:build",
-        "watch": true
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "poll:build:development"
-        },
-        "production": {
-          "buildTarget": "poll:build:production"
-        }
+        "command": "ts-node-dev --respawn -r tsconfig-paths/register apps/poll/src/main.ts"
       }
     }
   }
