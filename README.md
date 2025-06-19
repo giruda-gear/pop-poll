@@ -1,20 +1,16 @@
-# Monorepo Project
-
 This repository is a monorepo setup using Nx with multiple apps and libs, demonstrating a typical modern TypeScript backend development environment with NestJS and MikroORM.
 
-## Project Structure
-
-- `apps/` – Application projects (e.g., `poll`)
-- `libs/` – Shared libraries (e.g., `database` with entities and MikroORM config)
-- `dist/` – Compiled output
-
-## Tech Stack & Tools
-
-- **Nx** — Monorepo build and task runner  
-- **NestJS** — Backend framework  
-- **MikroORM** — TypeScript ORM with PostgreSQL  
-- **TypeScript** — Main language with `CommonJS` module system for compatibility  
-- **pnpm** — Package manager  
+## 🗂️ Monorepo Structure
+<pre><code>
+apps/
+├── api/        # Backend (NestJS)
+│   ├── poll/
+├── web/        # Frontend (Next.js)
+│   └── client/
+libs/           # Shared libraries
+├── database/   # MikroORM config, entities
+dist/           # Build output
+</code></pre>
 
 ## Setup & Usage
 
