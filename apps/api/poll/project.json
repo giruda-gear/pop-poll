@@ -1,0 +1,24 @@
+{
+  "name": "poll",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/poll/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["dist/apps/api/poll"],
+      "options": {
+        "outputPath": "dist/apps/api/poll",
+        "main": "apps/api/poll/src/main.ts",
+        "tsConfig": "apps/api/poll/tsconfig.app.json",
+        "assets": ["apps/api/poll/src/assets"]
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node-dev --respawn -r tsconfig-paths/register apps/api/poll/src/main.ts"
+      }
+    }
+  }
+}
