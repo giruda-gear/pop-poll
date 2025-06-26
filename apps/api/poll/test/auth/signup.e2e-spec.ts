@@ -4,7 +4,7 @@ import request from 'supertest';
 import { AppModule } from '../../src/app/app.module';
 import { MikroORM } from '@mikro-orm/core';
 
-describe('Auth - Signup (e2e)', () => {
+describe('Auth - Sign up (e2e)', () => {
   let app: INestApplication;
   let orm: MikroORM;
 
