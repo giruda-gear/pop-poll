@@ -8,5 +8,6 @@ import { User } from '@database';
   imports: [MikroOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}

@@ -34,7 +34,7 @@ export class UserController {
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
-    updateUserDto: UpdateUserDto
+    updateUserDto: UpdateUserDto,
   ): Promise<User> {
     return this.userService.update(id, updateUserDto);
   }

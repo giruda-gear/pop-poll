@@ -1,6 +1,7 @@
 import { User } from '@database';
 import { EntityManager } from '@mikro-orm/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
@@ -8,7 +9,8 @@ export class UserService {
   constructor(private readonly em: EntityManager) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.em.create(User, createUserDto);
+    const { email, username, password } = createUserDto;
+    const user = await User.create(email, username, password);
     await this.em.persistAndFlush(user);
     return user;
   }
@@ -21,10 +23,11 @@ export class UserService {
     return this.em.findOne(User, { id });
   }
 
-  async update(
-    id: number,
-    updateUserDto: Partial<CreateUserDto>
-  ): Promise<User> {
+  async findByEmail(email: string): Promise<User | null> {
+    return this.em.findOne(User, { email });
+  }
+
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findUserOrFail(id);
     this.em.assign(user, updateUserDto);
     await this.em.flush();
