@@ -19,6 +19,20 @@
       "options": {
         "command": "ts-node-dev --respawn -r tsconfig-paths/register apps/api/poll/src/main.ts"
       }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "apps/api/poll/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "test:e2e": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "apps/api/poll/jest.e2e.config.ts",
+        "passWithNoTests": true
+      }
     }
   }
 }
