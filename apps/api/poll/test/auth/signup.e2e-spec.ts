@@ -2,11 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '../../src/app/app.module';
-import { MikroORM } from '@mikro-orm/core';
 
 describe('Auth - Sign up (e2e)', () => {
   let app: INestApplication;
-  let orm: MikroORM;
 
   beforeAll(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
@@ -15,18 +13,6 @@ describe('Auth - Sign up (e2e)', () => {
 
     app = moduleRef.createNestApplication();
     await app.init();
-
-    orm = app.get(MikroORM);
-  });
-
-  beforeEach(async () => {
-    // 글로벌 컨텍스트에서 트랜잭션 시작
-    await orm.em.begin();
-  });
-
-  afterEach(async () => {
-    // 글로벌 컨텍스트에서 롤백
-    await orm.em.rollback();
   });
 
   afterAll(async () => {

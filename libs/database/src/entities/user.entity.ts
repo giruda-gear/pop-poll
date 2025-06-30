@@ -1,11 +1,14 @@
 import {
   BeforeCreate,
   BeforeUpdate,
+  Collection,
   Entity,
+  OneToMany,
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
 import * as bcrypt from 'bcrypt';
+import { Poll } from './poll.entity';
 
 @Entity({ tableName: 'users' })
 export class User {
@@ -20,6 +23,9 @@ export class User {
 
   @Property({ hidden: true })
   password!: string;
+
+  @OneToMany(() => Poll, (poll) => poll.creator)
+  polls= new Collection<Poll>(this)
 
   @Property({ onCreate: () => new Date() })
   createdAt?: Date;

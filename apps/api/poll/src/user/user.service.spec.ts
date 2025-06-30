@@ -4,9 +4,8 @@ import { Test } from '@nestjs/testing';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { mikroOrmConfig, User } from '@database';
 
-describe('UserService (unit)', () => {
+describe('UserService ', () => {
   let orm: MikroORM;
-  let em: EntityManager;
   let forkedEm: EntityManager;
   let userService: UserService;
 
@@ -20,17 +19,16 @@ describe('UserService (unit)', () => {
     }).compile();
 
     orm = moduleRef.get(MikroORM);
-    em = orm.em;
   });
 
   beforeEach(async () => {
-    forkedEm = em.fork(); 
+    forkedEm = orm.em.fork(); 
     await forkedEm.begin(); 
     userService = new UserService(forkedEm);
   });
 
   afterEach(async () => {
-    await forkedEm.rollback(); // 트랜잭션 롤백
+    await forkedEm.rollback();
   });
 
   afterAll(async () => {
