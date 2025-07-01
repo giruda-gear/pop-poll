@@ -17,7 +17,11 @@ module.exports = {
     //     ...createGlobPatternsForDependencies(__dirname)
   ],
   theme: {
-    extend: {},
+    extend: {
+      zIndex: {
+        modal: '1100',
+      }
+    },
   },
   plugins: [],
 };

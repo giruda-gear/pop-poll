@@ -1,3 +1,4 @@
+import LoginModal from "../components/auth/LoginModal"
 import Navbar from "../components/layout/Navbar"
 import "./global.css"
 
@@ -16,6 +17,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <LoginModal />
       </body>
     </html>
   )
