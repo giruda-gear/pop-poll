@@ -1,16 +1,14 @@
 'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useLoginModalStore } from '../../stores/useLoginModalStore'
+import { useSession } from 'next-auth/react'
 
 export default function Navbar() {
   const openModal = useLoginModalStore((state) => state.openModal)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  function handleLogin() {
-    setIsLoggedIn(!isLoggedIn)
-  }
+  const { data: session, status } = useSession()
 
   return (
     <nav className="bg-white shadow-md">
@@ -25,10 +23,9 @@ export default function Navbar() {
           />
         </Link>
         <div>
-          {isLoggedIn ? (
+          {session ? (
             <button
               className="w-20 rounded bg-gray-500 px-4 py-2 font-semibold text-white"
-              onClick={handleLogin}
             >
               Logout
             </button>

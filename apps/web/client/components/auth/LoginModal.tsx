@@ -1,6 +1,8 @@
 'use client'
 
 import { useLoginModalStore } from '../../stores/useLoginModalStore'
+import { XMarkIcon } from '@heroicons/react/20/solid'
+import LoginForm from './LoginForm'
 
 export default function LoginModal() {
   const { isOpen, closeModal } = useLoginModalStore()
@@ -9,33 +11,20 @@ export default function LoginModal() {
 
   return (
     <div
-      className="z-modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-30"
+      className="fixed inset-0 z-modal flex items-center justify-center bg-black bg-opacity-30"
       aria-modal="true"
       role="dialog"
     >
-      <div className="relative w-80 rounded-lg bg-white p-6">
+      <div className="relative w-80 rounded-md bg-white p-6">
         <button
-          type="button"
-          className="absolute right-3 top-3"
           onClick={closeModal}
+          className="absolute right-0 top-0 rounded-md p-2 hover:bg-gray-200"
         >
-          ✕
+          <XMarkIcon className="h-5 w-5 text-gray-700" />
         </button>
+
         <h2 className="mb-4 text-xl font-semibold">Login</h2>
-        <form>
-          <input type="text" placeholder="email" className="mb-3 w-full" />
-          <input
-            type="password"
-            placeholder="password"
-            className="mb-4 w-full"
-          />
-        </form>
-        <button
-          type="submit"
-          className="w-full rounded-md bg-purple-600 py-2 font-semibold text-white hover:bg-purple-700"
-        >
-          Login
-        </button>
+        <LoginForm />
       </div>
     </div>
   )
