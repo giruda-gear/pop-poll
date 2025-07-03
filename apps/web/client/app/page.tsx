@@ -1,5 +1,11 @@
-import TodayPoll from "../components/poll/TodayPoll";
+import PollList from '../components/poll/PollList'
+import TodayPoll from '../components/poll/TodayPoll'
 
 export default function Index() {
-  return <TodayPoll />
+  return (
+    <>
+      <TodayPoll />
+      <PollList />
+    </>
+  )
 }

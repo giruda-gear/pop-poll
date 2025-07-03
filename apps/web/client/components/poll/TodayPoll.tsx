@@ -12,19 +12,19 @@ export default function TodayPoll() {
   const optionText2 = '반대올시다!!'
 
   return (
-    <section className="bg-gray-50 py-6 shadow-sm">
+    <section className="bg-gray-50 py-4 shadow-sm">
       <div className="flex justify-center bg-gray-50 p-4 first-letter:items-center">
-        <div className="w-full rounded-lg bg-white p-6 shadow-xl">
-          <div className="mb-6 flex items-center justify-between">
+        <div className="w-full rounded-lg bg-white p-4 shadow-xl">
+          <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-bold text-gray-800">오늘의 투표</h2>
           </div>
 
-          <div className="relative flex h-36 overflow-hidden rounded-lg border border-gray-200">
+          <div className="relative flex h-28 overflow-hidden rounded-lg border border-gray-200">
             <div
               className="flex flex-shrink-0 flex-col items-start justify-center bg-purple-600 p-6 text-white transition-all duration-500 ease-out"
               style={{ width: `${option1Percentage}%` }}
             >
-              <span className="text-4xl font-bold">
+              <span className="text-3xl font-bold">
                 {Math.round(option1Percentage)}%
               </span>
               <span className="text-sm">{option1Votes}명</span>
@@ -35,7 +35,7 @@ export default function TodayPoll() {
               className="flex flex-shrink-0 flex-col items-end justify-center bg-[#3D8689] p-6 text-white transition-all duration-500 ease-out"
               style={{ width: `${option2Percentage}%` }}
             >
-              <span className="text-4xl font-bold">
+              <span className="text-3xl font-bold">
                 {Math.round(option2Percentage)}%
               </span>
               <span className="text-sm">{option2Votes}명</span>

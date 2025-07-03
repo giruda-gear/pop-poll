@@ -2,9 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
 import { useLoginModalStore } from '../../stores/useLoginModalStore'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 export default function Navbar() {
   const openModal = useLoginModalStore((state) => state.openModal)
@@ -26,6 +25,7 @@ export default function Navbar() {
           {session ? (
             <button
               className="w-20 rounded bg-gray-500 px-4 py-2 font-semibold text-white"
+              onClick={() => signOut({ callbackUrl: '/' })}
             >
               Logout
             </button>
