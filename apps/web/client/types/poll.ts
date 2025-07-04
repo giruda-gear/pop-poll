@@ -6,7 +6,7 @@ export enum PollStatus {
 
 export interface PollOption {
   id: number
-  text: string
+  optionText: string
   voteCount: number
 }
 

@@ -1,15 +1,18 @@
 import { Poll } from '../../types/poll'
 
 export default function PollCard({ poll }: { poll: Poll }) {
+  const options = poll.options
+  if (!options || options.length < 2) return null
+
+  const option1 = options[0]
+  const option2 = options[1]
+
   const isEnded = poll.status === 'ended'
+  
   const totalVotes = poll.options.reduce(
     (sum, option) => sum + option.voteCount,
     0,
   )
-
-  const option1 = poll.options[0]
-  const option2 = poll.options[1]
-
   const option1Percentage =
     totalVotes > 0 ? (option1.voteCount / totalVotes) * 100 : 50
   const option2Percentage =
@@ -19,13 +22,7 @@ export default function PollCard({ poll }: { poll: Poll }) {
     <div className="rounded-xl bg-white p-4 shadow transition hover:shadow-md">
       <div className="mb-2 flex items-start justify-between">
         <h3 className="text-lg font-bold text-gray-800">{poll.title}</h3>
-        {isEnded ? (
-          <span className="text-sm text-gray-400">✅ 종료됨</span>
-        ) : (
-          <button className="rounded-full bg-purple-600 px-4 py-1 text-sm text-white hover:bg-purple-700">
-            참여하기
-          </button>
-        )}
+        {isEnded && <span className="text-sm text-gray-400">✅ 종료됨</span>}
       </div>
 
       <div className="mb-2 text-sm text-gray-500">
@@ -42,7 +39,7 @@ export default function PollCard({ poll }: { poll: Poll }) {
             {Math.round(option1Percentage)}%
           </span>
           <span className="text-sm">{option1.voteCount}명</span>
-          <span className="mt-auto text-lg">{option1.text}</span>
+          <span className="mt-auto text-lg">{option1.optionText}</span>
         </div>
 
         <div
@@ -53,7 +50,7 @@ export default function PollCard({ poll }: { poll: Poll }) {
             {Math.round(option2Percentage)}%
           </span>
           <span className="text-sm">{option2.voteCount}명</span>
-          <span className="mt-auto text-lg">{option2.text}</span>
+          <span className="mt-auto text-lg">{option2.optionText}</span>
         </div>
       </div>
     </div>

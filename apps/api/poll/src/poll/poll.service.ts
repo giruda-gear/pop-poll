@@ -1,25 +1,29 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/core';
 import { Poll, PollStatus, PollOption, User } from '@database';
 import { CreatePollDto } from './dto/create-poll.dto';
+import Redis from 'ioredis';
 
 @Injectable()
 export class PollService {
-  constructor(private readonly em: EntityManager) {}
+  constructor(
+    private readonly em: EntityManager,
+    @Inject('REDIS_CLIENT') private readonly redisClient: Redis,
+  ) {}
 
   async create(data: CreatePollDto): Promise<Poll> {
     const creator = this.em.getReference(User, data.creator);
-  
+
     const poll = this.em.create(Poll, {
       title: data.title,
       description: data.description,
       creator,
       startAt: new Date(data.startAt),
-      endAt: new Date(data.endAt),      
+      endAt: new Date(data.endAt),
       status: data.status ?? PollStatus.SCHEDULED,
       options: [],
     });
-  
+
     for (const optionDto of data.options) {
       const option = this.em.create(PollOption, {
         optionText: optionDto.optionText,
@@ -28,13 +32,13 @@ export class PollService {
       });
       poll.options.add(option);
     }
-  
+
     await this.em.persistAndFlush(poll);
     return poll;
   }
 
   async findAll(): Promise<Poll[]> {
-    return this.em.find(Poll, {});
+    return this.em.find(Poll, {}, { populate: ['options'] });
   }
 
   async findOne(id: number): Promise<Poll | null> {

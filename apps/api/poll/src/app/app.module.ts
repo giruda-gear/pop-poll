@@ -7,6 +7,8 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { UserModule } from '../user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from '../auth/auth.module';
+import { PollModule } from '../poll/poll.module';
+import { RedisModule } from '../redis/redis.module';
 
 @Module({
   imports: [
@@ -14,8 +16,10 @@ import { AuthModule } from '../auth/auth.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    RedisModule,
     UserModule,
     AuthModule,
+    PollModule,
   ],
   controllers: [AppController],
   providers: [AppService],

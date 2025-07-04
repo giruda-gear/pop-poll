@@ -7,23 +7,22 @@ import { CreatePollDto } from './dto/create-poll.dto';
 
 describe('PollService', () => {
   let pollService: PollService;
-  let em: EntityManager;
+  // let em: EntityManager;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
-        MikroOrmModule.forRoot(mikroOrmConfig),
+        MikroOrmModule.forRoot({ ...mikroOrmConfig, allowGlobalContext: true }),
         MikroOrmModule.forFeature([User, Poll, PollOption]),
       ],
       providers: [PollService],
     }).compile();
 
-    em = moduleRef.get<EntityManager>(EntityManager);
+    // em = moduleRef.get<EntityManager>(EntityManager);
+    pollService = moduleRef.get<PollService>(PollService);
   });
 
   beforeEach(async () => {
-    em = em.fork();
-    pollService = new PollService(em);
     // await em.begin();
   });
 
@@ -38,12 +37,12 @@ describe('PollService', () => {
       };
 
       const createPollDto: CreatePollDto = {
-        title: 'Test Poll',
+        title: 'Test Poll2',
         description: 'Test Description',
         creator: testUser.id,
         startAt: '2024-07-15T09:00:00Z',
         endAt: '2024-07-15T18:00:00Z',
-        options: [{ optionText: 'Option 1' }, { optionText: 'Option 2' }],
+        options: [{ optionText: 'Option A' }, { optionText: 'Option B' }],
       };
 
       // Act
@@ -52,13 +51,13 @@ describe('PollService', () => {
       // Assert
       expect(result).toBeDefined();
       expect(result.id).toBeDefined();
-      expect(result.title).toBe('Test Poll');
+      expect(result.title).toBe('Test Poll2');
       expect(result.description).toBe('Test Description');
       expect(result.creator.id).toBe(testUser.id);
       expect(result.status).toBe(PollStatus.SCHEDULED);
       expect(result.options).toHaveLength(2);
-      expect(result.options[0].optionText).toBe('Option 1');
-      expect(result.options[1].optionText).toBe('Option 2');
+      expect(result.options[0].optionText).toBe('Option A');
+      expect(result.options[1].optionText).toBe('Option B');
     });
   });
 });
