@@ -11,20 +11,20 @@ export class PollService {
     @Inject('REDIS_CLIENT') private readonly redisClient: Redis,
   ) {}
 
-  async create(data: CreatePollDto): Promise<Poll> {
-    const creator = this.em.getReference(User, data.creator);
+  async create(createPollDto: CreatePollDto): Promise<Poll> {
+    const creator = this.em.getReference(User, createPollDto.creator);
 
     const poll = this.em.create(Poll, {
-      title: data.title,
-      description: data.description,
+      title: createPollDto.title,
+      description: createPollDto.description,
       creator,
-      startAt: new Date(data.startAt),
-      endAt: new Date(data.endAt),
-      status: data.status ?? PollStatus.SCHEDULED,
+      startAt: new Date(createPollDto.startAt),
+      endAt: new Date(createPollDto.endAt),
+      status: createPollDto.status ?? PollStatus.SCHEDULED,
       options: [],
     });
 
-    for (const optionDto of data.options) {
+    for (const optionDto of createPollDto.options) {
       const option = this.em.create(PollOption, {
         optionText: optionDto.optionText,
         poll: poll,

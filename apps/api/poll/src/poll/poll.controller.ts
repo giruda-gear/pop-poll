@@ -11,10 +11,14 @@ import {
 import { PollService } from './poll.service';
 import { Poll } from '@database';
 import { CreatePollDto } from './dto/create-poll.dto';
+import { PollOptionService } from '../poll-option/poll.option.service';
 
 @Controller('polls')
 export class PollController {
-  constructor(private readonly pollService: PollService) {}
+  constructor(
+    private readonly pollService: PollService,
+    private readonly pollOptionService: PollOptionService,
+  ) {}
 
   @Post()
   async create(@Body() createPollDto: CreatePollDto): Promise<Poll> {
@@ -44,5 +48,10 @@ export class PollController {
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.pollService.remove(id);
+  }
+
+  @Post('vote/:optionId')
+  vote(@Param('optionId', ParseIntPipe) optionId: number) {
+    return this.pollOptionService.vote(optionId);
   }
 }

@@ -1,12 +1,15 @@
 # Monorepo Project
 
-This repository is a monorepo setup using Nx with multiple apps and libs, demonstrating a typical modern TypeScript backend development environment with NestJS and MikroORM.
+This repository is a monorepo setup using Nx with multiple apps and libs
 
 ## Project Structure
 
-- `apps/` – Application projects (e.g., `poll`)
-- `libs/` – Shared libraries (e.g., `database` with entities and MikroORM config)
-- `dist/` – Compiled output
+📦 monorepo-root/
+├── apps/
+│   ├── api/poll/ (NestJS)
+│   └── web/client/ (Next.js)
+└── libs/
+    └── database/ (MikroORM)
 
 ## Tech Stack & Tools
 
@@ -18,19 +21,21 @@ This repository is a monorepo setup using Nx with multiple apps and libs, demons
 
 ## Setup & Usage
 
-1. Install dependencies:  
+1. Install workspace dependencies:  
 ```bash
-   pnpm install
+   pnpm install -w
 ```
-2.	Build shared libraries:
+2. Launch PostgreSQL and Redis with Docker Compose:
 ```bash
-    nx build database
+    docker compose up -d
 ```
 3.	Run application in development mode with Nx
 ```bash
     nx serve poll
+    nx serve client
 ```
-4.	Configure environment variables for database connection (e.g., .env file).
+
+4.	Configure environment variables (e.g., .env file).
 
 
 ## Notes

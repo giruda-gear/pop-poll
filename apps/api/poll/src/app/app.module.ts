@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from '../auth/auth.module';
 import { PollModule } from '../poll/poll.module';
 import { RedisModule } from '../redis/redis.module';
+import { PollOptionModule } from '../poll-option/poll.option.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RedisModule } from '../redis/redis.module';
     UserModule,
     AuthModule,
     PollModule,
+    PollOptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
