@@ -54,4 +54,9 @@ export class PollController {
   vote(@Param('optionId', ParseIntPipe) optionId: number) {
     return this.pollOptionService.vote(optionId);
   }
+
+  @Post('end/:pollId')
+  endPoll(@Param('pollId', ParseIntPipe) pollId: number) {
+    return this.pollService.endPoll(pollId);
+  }
 }

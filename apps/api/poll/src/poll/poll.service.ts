@@ -1,14 +1,16 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/core';
 import { Poll, PollStatus, PollOption, User } from '@database';
 import { CreatePollDto } from './dto/create-poll.dto';
-import Redis from 'ioredis';
+import { PollOptionService } from '../poll-option/poll.option.service';
 
 @Injectable()
 export class PollService {
+  private readonly logger = new Logger(PollService.name);
+
   constructor(
     private readonly em: EntityManager,
-    @Inject('REDIS_CLIENT') private readonly redisClient: Redis,
+    private readonly pollOptionService: PollOptionService,
   ) {}
 
   async create(createPollDto: CreatePollDto): Promise<Poll> {
@@ -41,19 +43,42 @@ export class PollService {
     return this.em.find(Poll, {}, { populate: ['options'] });
   }
 
-  async findOne(id: number): Promise<Poll | null> {
-    return this.em.findOne(Poll, { id });
+  async findOne(pollId: number): Promise<Poll | null> {
+    return this.em.findOne(Poll, pollId);
   }
 
-  async update(id: number, data: Partial<Poll>): Promise<Poll> {
-    const poll = await this.findOneOrFail(id);
+  async update(pollId: number, data: Partial<Poll>): Promise<Poll> {
+    const poll = await this.findOneOrFail(pollId);
     this.em.assign(poll, data);
     await this.em.flush();
     return poll;
   }
 
-  async remove(id: number): Promise<void> {
-    const poll = await this.findOneOrFail(id);
+  async endPoll(pollId: number): Promise<void> {
+    const poll = await this.findOneOrFail(pollId);
+
+    if (poll.status === PollStatus.ENDED) {
+      throw new Error('Poll is already ended');
+    }
+
+    poll.status = PollStatus.ENDED;
+    await this.em.flush();
+
+    try {
+      await this.pollOptionService.syncVotesToDB(pollId);
+    } catch (error) {
+      if (error instanceof Error) {
+        this.logger.error(`Vote sync failed for poll ${pollId}`, error.stack);
+      } else {
+        this.logger.error(
+          `Vote sync failed for poll ${pollId}: ${JSON.stringify(error)}`,
+        );
+      }
+    }
+  }
+
+  async remove(pollId: number): Promise<void> {
+    const poll = await this.findOneOrFail(pollId);
     await this.em.removeAndFlush(poll);
   }
 

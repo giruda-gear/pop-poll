@@ -4,20 +4,14 @@ This repository is a monorepo setup using Nx with multiple apps and libs
 
 ## Project Structure
 
+```
 📦 monorepo-root/
 ├── apps/
 │   ├── api/poll/ (NestJS)
 │   └── web/client/ (Next.js)
 └── libs/
     └── database/ (MikroORM)
-
-## Tech Stack & Tools
-
-- **Nx** — Monorepo build and task runner  
-- **NestJS** — Backend framework  
-- **MikroORM** — TypeScript ORM with PostgreSQL  
-- **TypeScript** — Main language with `CommonJS` module system for compatibility  
-- **pnpm** — Package manager  
+```
 
 ## Setup & Usage
 
@@ -62,3 +56,9 @@ This repository is a monorepo setup using Nx with multiple apps and libs
   - Use webpack to bundle code for smaller deploy size and faster startup in serverless environments.
   - For local or traditional servers, `tsc` compile-only is sufficient and faster.
   - To enable webpack, set the build executor to `@nx/webpack:webpack` with a proper `webpack.config.js`.
+
+## Redis Vote Count Sync Strategy
+- Votes are incremented in Redis using atomic commands (e.g., HINCRBY).
+- Periodically or on specific events (e.g., poll expiration), vote counts from Redis are synchronized back to the PostgreSQL database.
+- Redis keys are cleared once a poll ends to prevent stale data.
+- Error handling and retries should be implemented to ensure data consistency between Redis and the database.
